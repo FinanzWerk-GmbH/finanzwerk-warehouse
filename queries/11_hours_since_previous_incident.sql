@@ -1,7 +1,3 @@
--- Hours elapsed since the previous incident on the same service.
--- LAG(occurred_at) looks one row back within the PARTITION BY service_name window.
--- The first incident per service has no predecessor, so previous_incident_at is NULL
--- and hours_since_previous is NULL — this is intentional (not a bug to suppress).
 SELECT
     incident_id,
     service_name,

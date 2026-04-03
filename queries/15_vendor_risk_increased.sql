@@ -1,7 +1,3 @@
--- Type 3 detection: vendors whose risk score jumped by more than 2 points.
--- A sudden increase is a DORA red flag — may indicate a vendor deterioration event
--- that needs to be cross-referenced against incidents in that period.
--- previous_risk_score is NULL for vendors that have never been updated.
 SELECT
     vendor_id,
     vendor_name,

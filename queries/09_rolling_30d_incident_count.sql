@@ -1,7 +1,3 @@
--- Rolling 30-day incident count per service.
--- COUNT ... OVER keeps every row visible (unlike GROUP BY which collapses them).
--- RANGE BETWEEN INTERVAL '30 days' PRECEDING AND CURRENT ROW creates a
--- time-based window, not a fixed row count, so sparse periods shrink naturally.
 SELECT
     incident_id,
     service_name,

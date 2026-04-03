@@ -1,7 +1,3 @@
--- Data Vault 2.0: Hub, Satellite, Link for the vendor register.
--- Append-only — rows are never updated or deleted.
-
--- One row per unique vendor. Stores only the business key + load metadata.
 CREATE TABLE compliance.hub_vendor (
     hub_vendor_key  SERIAL    PRIMARY KEY,
     vendor_id       UUID      NOT NULL UNIQUE,
@@ -9,8 +5,7 @@ CREATE TABLE compliance.hub_vendor (
     record_source   TEXT      NOT NULL
 );
 
--- Full attribute history. Each change inserts a new row; the previous row stays.
--- is_current is a convenience flag — strict DV2.0 would use MAX(load_timestamp) instead.
+-- is_current is a convenience flag; strict DV2.0 uses MAX(load_timestamp) instead
 CREATE TABLE compliance.sat_vendor_details (
     hub_vendor_key      INTEGER      NOT NULL REFERENCES compliance.hub_vendor (hub_vendor_key),
     load_timestamp      TIMESTAMP    NOT NULL,

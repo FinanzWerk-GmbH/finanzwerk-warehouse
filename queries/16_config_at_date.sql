@@ -1,6 +1,3 @@
--- Type 4 point-in-time audit: the value of every config key as of a given timestamp.
--- DISTINCT ON (key) keeps only the most recent change at or before the target time.
--- Swap the timestamp to reconstruct the config state during any past incident.
 SELECT DISTINCT ON (key)
     key,
     value,

@@ -1,9 +1,5 @@
--- Star schema for the incident reporting layer (compliance schema created in 003).
--- Surrogate integer keys (vendor_key etc.) instead of UUID FKs — integer joins
--- are faster and decouple the warehouse from source system ID changes.
-
 CREATE TABLE compliance.dim_date (
-    date_key     INTEGER  PRIMARY KEY,  -- YYYYMMDD, e.g. 20260605
+    date_key     INTEGER  PRIMARY KEY,  -- YYYYMMDD
     full_date    DATE     NOT NULL UNIQUE,
     day_of_week  TEXT     NOT NULL,
     week_number  INTEGER  NOT NULL,
@@ -12,7 +8,7 @@ CREATE TABLE compliance.dim_date (
     is_weekend   BOOLEAN  NOT NULL
 );
 
--- SCD Type 2: valid_to IS NULL = current record for this vendor_id.
+-- SCD Type 2: valid_to IS NULL = current record for this vendor_id
 CREATE TABLE compliance.dim_vendor (
     vendor_key        SERIAL       PRIMARY KEY,
     vendor_id         UUID         NOT NULL,
@@ -30,12 +26,11 @@ CREATE UNIQUE INDEX idx_dim_vendor_current
 CREATE TABLE compliance.dim_service (
     service_key   SERIAL  PRIMARY KEY,
     service_name  TEXT    NOT NULL UNIQUE,
-    service_tier  TEXT    NOT NULL DEFAULT 'standard'
+    service_tier  TEXT    NOT NULL DEFAULT 'standard',
+    display_name  TEXT
 );
 
--- severity kept as a degenerate dimension — small enum, not worth its own table.
--- vendor_key is nullable: some incidents have no linked vendor.
--- is_major_incident and is_notified_within_24h are computed on load, not at query time.
+-- is_major_incident and is_notified_within_24h computed on load, not at query time
 CREATE TABLE compliance.fact_ict_incidents (
     incident_key            SERIAL         PRIMARY KEY,
     incident_id             UUID           NOT NULL UNIQUE,

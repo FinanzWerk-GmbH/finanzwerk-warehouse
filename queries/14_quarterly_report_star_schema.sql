@@ -1,6 +1,3 @@
--- Same report as query 13, rewritten against the star schema.
--- is_major_incident is pre-computed on load so no CASE/CTE needed here.
--- Quarter filter uses dim_date columns instead of date_trunc().
 SELECT
     dv.vendor_name,
     dv.service_category,

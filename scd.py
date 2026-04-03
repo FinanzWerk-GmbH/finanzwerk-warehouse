@@ -15,7 +15,6 @@ def update_vendor_risk_score(cur, vendor_id, new_score):
 
 
 def update_config(cur, key, value, changed_by):
-    # archive current value before overwriting, if one exists
     cur.execute("""
         INSERT INTO compliance.config_history (key, value, changed_by)
         SELECT key, value, %s FROM compliance.config_current WHERE key = %s

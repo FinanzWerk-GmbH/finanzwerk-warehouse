@@ -1,8 +1,3 @@
--- Vendor ranking by total incident count.
--- Global rank: position across all vendors.
--- Category rank: position within each service_category peer group.
--- RANK() assigns the same number to ties and skips the next (1,1,3).
--- Use DENSE_RANK() if you need no gaps (1,1,2).
 SELECT
     v.vendor_name,
     v.service_category,

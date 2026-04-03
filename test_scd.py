@@ -1,8 +1,3 @@
-"""
-SCD behaviour tests. Requires a live DB with all migrations applied.
-Run: python3 test_scd.py
-"""
-
 from db import get_connection
 from scd import update_service_display_name, update_config
 
@@ -25,7 +20,6 @@ def test_type1_overwrites():
             )
             name = cur.fetchone()[0]
 
-            # Type 1: old value is gone, no history row exists anywhere
             assert name == 'New Name', f"got {name!r}"
 
     finally:
@@ -51,7 +45,6 @@ def test_type4_config_history():
             cur.execute(
                 "SELECT COUNT(*) FROM compliance.config_history WHERE key = %s", ('_test_key',)
             )
-            # first call produces no history (nothing to archive), next two do
             assert cur.fetchone()[0] == 2
 
     finally:

@@ -1,16 +1,3 @@
--- DORA/NIS2 quarterly vendor compliance report, built as a CTE chain.
---
--- Step 1 – incidents_this_quarter: scope to the current calendar quarter.
--- Step 2 – major_incidents: DORA "major ICT incident" filter (severity OR scale).
--- Step 3 – notification_compliance: derive 24-hour NIS2 flag per incident using
---           ict_incidents.notified_at (set at first notification).
--- Step 4 – vendor_summary: aggregate per vendor.
--- Final SELECT: join vendors dimension, compute compliance rate %.
---
--- CTE note: PostgreSQL 12+ inlines CTEs by default (not an optimisation fence),
--- so the planner can push predicates through. Add MATERIALIZED to any CTE to
--- force independent execution and cache its result.
-
 WITH incidents_this_quarter AS (
     SELECT *
     FROM ict_incidents
@@ -19,7 +6,6 @@ WITH incidents_this_quarter AS (
 ),
 
 major_incidents AS (
-    -- DORA Art. 18: high/critical severity OR > 1,000 clients affected.
     SELECT *
     FROM incidents_this_quarter
     WHERE severity IN ('high', 'critical')

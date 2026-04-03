@@ -1,8 +1,3 @@
--- Notification delay and NIS2 24-hour compliance status for high/critical incidents.
--- Joins notification_log so each notification entry is one row.
--- ROW_NUMBER() within incident_id reveals whether regulators were reached on
--- the first attempt or required a follow-up.
--- nis2_status: NOT_NOTIFIED | COMPLIANT (≤24 h) | BREACHED (>24 h).
 SELECT
     i.incident_id,
     i.service_name,
