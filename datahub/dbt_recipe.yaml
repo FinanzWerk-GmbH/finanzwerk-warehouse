@@ -1,0 +1,17 @@
+source:
+  type: dbt
+  config:
+    manifest_path: /opt/dagster/dbt/finanzwerk_dbt/target/manifest.json
+    catalog_path: /opt/dagster/dbt/finanzwerk_dbt/target/catalog.json
+    target_platform: postgres
+    enable_meta_mapping: true
+    node_name_pattern:
+      allow:
+        - ".*"
+    # emit lineage between dbt models and their source tables
+    include_column_lineage: true
+
+sink:
+  type: datahub-rest
+  config:
+    server: "http://localhost:9002"

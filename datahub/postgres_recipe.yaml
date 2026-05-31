@@ -1,0 +1,22 @@
+source:
+  type: postgres
+  config:
+    host_port: "localhost:5432"  # kubectl port-forward svc/postgres-rw 5432:5432 -n postgres
+    database: finanzwerk
+    username: readwrite
+    password: readwrite_password
+    include_tables: true
+    include_views: true
+    profiling:
+      enabled: false
+    schema_pattern:
+      allow:
+        - "public"
+        - "compliance"
+        - "marts"
+        - "snapshots"
+
+sink:
+  type: datahub-rest
+  config:
+    server: "http://localhost:9002"  # kubectl port-forward svc/datahub-datahub-frontend 9002:9002 -n governance
